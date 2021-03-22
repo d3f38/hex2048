@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { calculatePosition } from '../utils';
 import useGame from '../hooks/useGame';
@@ -21,7 +21,7 @@ const COLORS = {
 const GAME_OPTIONS = [2, 3, 4];
 
 export default ({ location: { hash } }) => {
-  const initialRadius = hash.replace(/[^\d]/g, '') || 2;
+  const initialRadius = Number(hash.replace(/[^\d]/g, '')) || 2;
 
   const [activeRadius, setActiveRadius] = useState(initialRadius);
   const [server, setServer] = useState(
@@ -52,21 +52,28 @@ export default ({ location: { hash } }) => {
           </option>
         </select>
       </div>
-
       <div className="radius">
         <span className="radius__title">Select radius</span>
 
         {GAME_OPTIONS.map((option) => (
           <button
+            id={option}
             key={`option-${option}`}
             type="button"
-            className={cn('radius__button', { radius__button_active: activeRadius === option })}
-            onClick={() => setActiveRadius(option)}
+            className={cn('radius__button', {
+              radius__button_active: activeRadius === option,
+            })}
+            onClick={() => {
+              setActiveRadius(option);
+
+              window.location.hash = `test${option}`;
+            }}
           >
             {option}
           </button>
         ))}
       </div>
+      <div className="rules">Use q, w, e, a, s, d keys for move.</div>
 
       <div className="hex">
         {cells &&
@@ -78,7 +85,7 @@ export default ({ location: { hash } }) => {
                 })}
                 style={{
                   position: 'absolute',
-                  ...(visibleHex[index] && calculatePosition(visibleHex[index])),
+                  ...(visibleHex[index] && calculatePosition(visibleHex[index], activeRadius)),
                   color: item.value >= 8 ? 'white' : 'rgb(118, 110, 102)',
                 }}
                 key={JSON.stringify(item)}
@@ -89,10 +96,10 @@ export default ({ location: { hash } }) => {
               >
                 {item.value > 0 && item.value}
 
-                <div className="hex__bg-border" />
+                <div className={cn('hex__bg-border', `hex__bg-border_radius-${activeRadius}`)} />
 
                 <svg
-                  className="hex__bg"
+                  className={cn('hex__bg', `hex__bg-border_radius-${activeRadius}`)}
                   id="0.2954830724409139"
                   height="108.25317547305482"
                   width="125"
@@ -109,7 +116,6 @@ export default ({ location: { hash } }) => {
             );
           })}
       </div>
-
       <div>
         Game Status:{' '}
         <span data-status={statusGame} className="status">

@@ -1,0 +1,12 @@
+{
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
+  "rules": {
+    "react/prop-types": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "no-undef": 0,
+    "camelcase": 0,
+    "import/prefer-default-export": 0,
+    "no-plusplus": 0,
+    "react-hooks/exhaustive-deps": 0
+  }
+}

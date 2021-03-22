@@ -14,6 +14,10 @@ npm install
 npm run dev
 ```
 
+## How to play  
+
+Use q, w, e, a, s, d keys to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!
+
 ## Unit Tests
 
 Unit tests are built with [Jest](https://jestjs.io/) 

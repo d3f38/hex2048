@@ -45,7 +45,10 @@ const useGame = (server, activeRadius) => {
           )
           .then(({ data }) => {
             if (data.length) {
-              const updatedCells = addNewCells(data, currentHex);
+              const updatedCells = addNewCells(
+                data.map((e) => ({ ...e, isNew: true })),
+                currentHex.map((e) => ({ ...e, isNew: false }))
+              );
 
               setVisibleHex(cubeToAxial(updatedCells));
               setCells(updatedCells);
@@ -109,6 +112,8 @@ const useGame = (server, activeRadius) => {
   useEffect(() => {
     if (activeRadius && !init) {
       const initCells = generateHex(activeRadius);
+
+      setVisibleHex(cubeToAxial(initCells));
       setCells(initCells);
 
       setInit(true);

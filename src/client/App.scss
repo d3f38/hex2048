@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background: #faf8ef;
+  color: #776e65;
 }
 
 * {
@@ -11,27 +12,78 @@ body {
 }
 
 .settings {
-  background: #bbada0;
+  width: 300px;
+  padding: 10px;
+  margin: 16px auto 0;
+  border-radius: 4px;
+  background-color: rgb(249, 245, 241);
+  border: 1px solid rgb(233, 229, 225);
+}
+
+.radius {
+  margin-bottom: 8px;
+
+  &__title {
+    margin-right: 8px;
+  }
+
+  &__button {
+    margin-right: 8px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 0;
+    outline: none;
+    background: #bbada0;
+    color: #ffffff;
+    cursor: pointer;
+
+    &_active {
+      background: #8f7a66;
+    }
+  }
+}
+
+.server {
+  margin-bottom: 8px;
 }
 
 .hex {
   position: absolute;
-  left: 50%;
+  left: calc(50% - 50px);
   top: 50%;
 
   &__cell {
     position: absolute;
     z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
     font-size: 24px;
     font-weight: bold;
     color: #ffffff;
+    transition: 0.3s;
+
+    &_new {
+      @keyframes scale {
+        from {
+          transform: scale(1.2);
+        }
+
+        to {
+          transform: scale(1);
+        }
+      }
+
+      animation: scale 0.3s;
+      animation-fill-mode: forwards;
+    }
   }
 
   &__bg-border {
     position: absolute;
     z-index: 2;
-    left: -70px;
-    top: -45px;
     width: 155px;
     height: 115px;
 
@@ -41,7 +93,10 @@ body {
   &__bg {
     position: absolute;
     z-index: -1;
-    left: -55px;
-    top: -40px;
+    transition: 0.3s;
   }
+}
+
+.status {
+  font-weight: bold;
 }

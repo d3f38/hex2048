@@ -1,7 +1,7 @@
 const calculatePosition = ({ q, r }) => {
   return {
     left: q * 99,
-    top: r * 103 + (q * 100) / 2,
+    top: r * 105 + (q * 105) / 2,
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { calculatePosition } from '../utils';
 import useGame from '../hooks/useGame';
@@ -24,7 +24,9 @@ export default ({ location: { hash } }) => {
   const initialRadius = hash.replace(/[^\d]/g, '') || 2;
 
   const [activeRadius, setActiveRadius] = useState(initialRadius);
-  const [server, setServer] = useState('http://localhost:13337/');
+  const [server, setServer] = useState(
+    '//68f02c80-3bed-4e10-a747-4ff774ae905a.pub.instances.scw.cloud'
+  );
 
   const { cells, statusGame, visibleHex } = useGame(server, activeRadius);
 
@@ -71,7 +73,9 @@ export default ({ location: { hash } }) => {
           cells.map((item, index) => {
             return (
               <div
-                className="hex__cell"
+                className={cn('hex__cell', {
+                  hex__cell_new: item.value !== 0 && item.isNew,
+                })}
                 style={{
                   position: 'absolute',
                   ...(visibleHex[index] && calculatePosition(visibleHex[index])),
@@ -84,10 +88,6 @@ export default ({ location: { hash } }) => {
                 data-value={item.value}
               >
                 {item.value > 0 && item.value}
-
-                <span style={{ fontSize: '10px', color: 'grey', whiteSpace: 'nowrap' }}>
-                  {item.x} {item.y} {item.z}
-                </span>
 
                 <div className="hex__bg-border" />
 
@@ -111,7 +111,10 @@ export default ({ location: { hash } }) => {
       </div>
 
       <div>
-        Game Status: <span data-status={statusGame}>{statusGame}</span>
+        Game Status:{' '}
+        <span data-status={statusGame} className="status">
+          {statusGame}
+        </span>
       </div>
     </div>
   );

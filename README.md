@@ -1,6 +1,6 @@
 # 2048
 
-Game 2048 on hexagonal field. Published solution: https://d3f38.github.io/
+Game 2048 on hexagonal field.
  
 ## Installation
 
